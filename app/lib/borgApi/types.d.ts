@@ -1,0 +1,37 @@
+export type BorgHistoryInterval = "day" | "month" | "year" | "all";
+
+export type BorgStatsResponse = {
+  weeklyVolumeUsd: number;
+  premiumUsers: number;
+  weeklyPremiumUsers: number;
+  stakedBorgTokens: number;
+  stakedBorgPercentage: number;
+  borgYieldEarnedUsd: number;
+  borgPendingBuybackTokens: number;
+  borgPendingBurnTokens: number;
+  circulatingSupplyTokens: number;
+  circulatingSupplyPercentage: number;
+  borgInYieldTokens: number;
+  borgInYieldPercentage: number;
+  borgBurnedTokens: number;
+  borgBurnedPercentage: number;
+  borgInBubackPoolTokens: number;
+  borgInBubackPoolPercentage: number;
+};
+
+export type BorgPriceAndTimeData = {
+  timestamp: string;
+  price: number;
+};
+
+type PriceData = {
+  price: number;
+  change24h: number;
+};
+
+export type BorgPriceResponse = {
+  usd: PriceData;
+  chf: PriceData;
+  eur: PriceData;
+  gbp: PriceData;
+};
