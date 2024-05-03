@@ -24,14 +24,14 @@ export type BorgPriceAndTimeData = {
   price: number;
 };
 
-type PriceData = {
+export type BorgPriceData = {
   price: number;
   change24h: number;
 };
 
 export type BorgPriceResponse = {
-  usd: PriceData;
-  chf: PriceData;
-  eur: PriceData;
-  gbp: PriceData;
+  usd: BorgPriceData;
+  chf: BorgPriceData;
+  eur: BorgPriceData;
+  gbp: BorgPriceData;
 };

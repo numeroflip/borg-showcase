@@ -1,8 +1,8 @@
 import type { Metadata } from "next";
-import { Roboto } from "next/font/google";
+import { Rubik } from "next/font/google";
 import "./globals.css";
 
-const roboto = Roboto({weight: ['400', '700'], subsets: ['latin']});
+const rubik = Rubik({ weight: ["400", "600"], subsets: ["latin"] });
 
 export const metadata: Metadata = {
   title: "Create Next App",
@@ -16,9 +16,7 @@ export default function RootLayout({
 }>) {
   return (
     <html lang="en">
-      <body className={roboto.className + ' text-petrol-800'}>{children}
-      
-      </body>
+      <body className={rubik.className + " text-petrol-800"}>{children}</body>
     </html>
   );
 }
