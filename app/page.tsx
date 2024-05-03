@@ -25,7 +25,11 @@ export default async function Home() {
           Deep-dive into the statistics of BORG and the mechanics of the full
           SwissBorg Ecosystem.
         </h2>
-        <HistoryChart currentPrice={price.usd} historicPrice={historicPrice} />
+        <HistoryChart
+          className="mt-4 md:mt-12"
+          currentPrice={price.usd}
+          historicPrice={historicPrice}
+        />
       </section>
 
       <section className="px-5">
