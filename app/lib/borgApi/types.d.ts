@@ -1,4 +1,4 @@
-export type BorgHistoryInterval = "day" | "month" | "year" | "all";
+export type BorgPriceTimeframe = "day" | "month" | "year" | "all";
 
 export type BorgStatsResponse = {
   weeklyVolumeUsd: number;

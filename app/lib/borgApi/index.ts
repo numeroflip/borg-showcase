@@ -1,5 +1,5 @@
 import {
-  BorgHistoryInterval,
+  BorgPriceTimeframe,
   BorgPriceAndTimeData,
   BorgPriceResponse,
   BorgStatsResponse,
@@ -16,7 +16,7 @@ export async function getBorgStats(): Promise<BorgStatsResponse> {
 }
 
 export async function getBorgHistoricPrice(
-  interval: BorgHistoryInterval = "day"
+  interval: BorgPriceTimeframe = "day"
 ): Promise<BorgPriceAndTimeData[]> {
   return fetch(`${BASE_URL}/historical-price/${interval}`).then((res) =>
     res.json()

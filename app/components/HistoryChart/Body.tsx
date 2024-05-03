@@ -1,6 +1,11 @@
 import { BorgPriceAndTimeData } from "@/app/lib/borgApi/types";
-import React from "react";
-import { VictoryArea, VictoryAxis, VictoryChart } from "victory";
+import React, { useEffect, useState } from "react";
+import {
+  VictoryArea,
+  VictoryAxis,
+  VictoryChart,
+  VictoryClipContainer,
+} from "victory";
 import tailwindConfig from "../../../tailwind.config";
 import { format } from "date-fns";
 
@@ -13,8 +18,14 @@ const GRADIENT_ID = "gradient-under-chart";
 const Body: React.FC<Props> = ({ historicPrice }) => {
   const minPrice = Math.min(...historicPrice.map((data) => data.price));
 
+  const [isClient, setIsClient] = useState(false);
+
+  useEffect(() => {
+    setIsClient(true);
+  }, []);
+
   return (
-    <>
+    <div suppressHydrationWarning className="pointer-events-none">
       <VictoryChart
         scale={{ x: "time" }}
         padding={{ top: 20, bottom: 20 }}
@@ -37,13 +48,23 @@ const Body: React.FC<Props> = ({ historicPrice }) => {
           data={historicPrice}
           y={({ price }) => price}
           x={({ timestamp }) => new Date(timestamp).getTime()}
+          groupComponent={
+            <VictoryClipContainer clipId="hero-chart-clip-container" />
+          }
         />
 
         <VictoryAxis
           tickFormat={(tick: string) => {
+            if (!isClient) {
+              return "";
+            }
+
             const date = new Date(tick);
-            return format(date, "kk:mm");
+            const formattedTime = format(date, "HH:mm");
+            return formattedTime === "00:00" ? "24:00" : formattedTime;
           }}
+          tickCount={5}
+          padding={100}
           style={{
             axis: { display: "none" },
             grid: { display: "none" },
@@ -82,7 +103,7 @@ const Body: React.FC<Props> = ({ historicPrice }) => {
       </VictoryChart>
 
       {/* Defining a linear gradient so we can reference it in the charts 'fill' property */}
-      <svg className="absolute">
+      <svg className="absolute size-0">
         <defs>
           <linearGradient id={GRADIENT_ID} x1="0%" y1="0%" x2="0%" y2="100%">
             <stop
@@ -97,7 +118,7 @@ const Body: React.FC<Props> = ({ historicPrice }) => {
           </linearGradient>
         </defs>
       </svg>
-    </>
+    </div>
   );
 };
 

@@ -6,7 +6,6 @@ import {
   getBorgStats,
 } from "./lib/borgApi";
 
-import Image from "next/image";
 import { formatNumber, formatPercentage } from "./lib/number";
 
 export default async function Home() {

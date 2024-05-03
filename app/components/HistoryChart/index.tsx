@@ -1,9 +1,14 @@
 "use client";
 
-import { BorgPriceAndTimeData, BorgPriceData } from "@/app/lib/borgApi/types";
+import {
+  BorgPriceAndTimeData,
+  BorgPriceData,
+  BorgPriceTimeframe,
+} from "@/app/lib/borgApi/types";
 import Footer from "./Footer";
 import Header from "./Header";
 import Body from "./Body";
+import { useState } from "react";
 
 interface Props {
   currentPrice: BorgPriceData;
@@ -12,6 +17,8 @@ interface Props {
 }
 
 function HistoryChart({ currentPrice, historicPrice, className }: Props) {
+  const [timeframe, setTimeframe] = useState<BorgPriceTimeframe>("day");
+
   return (
     <div
       className={
@@ -23,7 +30,7 @@ function HistoryChart({ currentPrice, historicPrice, className }: Props) {
       <Body
         historicPrice={historicPrice.filter((_data, index) => index % 5 === 0)}
       />
-      <Footer />
+      <Footer selectedBtn={timeframe} onSelect={setTimeframe} />
     </div>
   );
 }
