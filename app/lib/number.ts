@@ -1,4 +1,6 @@
-const numberFormatter = new Intl.NumberFormat("en-US");
+const numberFormatter = new Intl.NumberFormat("en-US", {
+  maximumFractionDigits: 2,
+});
 
 export function formatNumber(num: number) {
   return numberFormatter.format(num);

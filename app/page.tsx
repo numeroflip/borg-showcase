@@ -30,7 +30,7 @@ export default async function Home() {
           <HistoryChart
             className="mt-4 md:mt-12"
             currentPrice={price.usd}
-            historicPrice={historicPrice}
+            initialHistoricPrice={historicPrice}
           />
         </Suspense>
       </section>

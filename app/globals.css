@@ -13,4 +13,15 @@
   outline-offset: 1px;
 }
 
+.recharts-cartesian-grid-horizontal line:last-child {
+  display: none;
+}
+
+.xAxis g .recharts-cartesian-axis-tick:first-child {
+  display: none;
+}
+
+/* .Axis g .recharts-cartesian-axis-tick:last-child {
+  display: none;
+} */
 

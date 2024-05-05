@@ -1,5 +1,5 @@
 "use client";
-import { VictoryLabel, VictoryLabelProps, VictoryPie } from "victory";
+import { VictoryPie } from "victory";
 import { BorgStatsResponse } from "../lib/borgApi/types";
 
 interface Props {

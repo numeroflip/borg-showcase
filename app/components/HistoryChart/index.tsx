@@ -9,52 +9,60 @@ import Footer from "./Footer";
 import Header from "./Header";
 import Body from "./Body";
 import { getBorgHistoricPrice } from "@/app/lib/borgApi";
-import { useQuery } from "@tanstack/react-query";
+import { useQuery, useQueryClient } from "@tanstack/react-query";
 import { useEffect, useState } from "react";
-import { useIsClient } from "@/app/lib/hooks/useIsClient";
 
 interface Props {
   currentPrice: BorgPriceData;
-  historicPrice: BorgPriceAndTimeData[];
+  initialHistoricPrice: BorgPriceAndTimeData[];
   className?: string;
 }
 
-function HistoryChart({ currentPrice, historicPrice, className }: Props) {
-  const [timeframe, setTimeframe] = useState<BorgPriceTimeframe>("day");
-
-  const { data, isPending, isFetched, error } = useQuery({
+function queryOptionsFor(timeframe: BorgPriceTimeframe) {
+  return {
     queryKey: ["borgHistoricPrice", timeframe],
     queryFn: () => getBorgHistoricPrice(timeframe),
-    initialData: historicPrice,
-    staleTime: 10,
+  };
+}
+
+function HistoryChart({
+  currentPrice,
+  initialHistoricPrice,
+  className,
+}: Props) {
+  const [timeframe, setTimeframe] = useState<BorgPriceTimeframe>("day");
+
+  const { data, error } = useQuery({
+    ...queryOptionsFor(timeframe),
+    initialData: (timeframe === "day" && initialHistoricPrice) || undefined,
+    placeholderData: [],
+    staleTime: 10 * 1000,
   });
 
-  const isClient = useIsClient();
-  const isLoading = isClient && !isFetched;
+  const client = useQueryClient();
+
+  useEffect(function prefetchData() {
+    client.prefetchQuery(queryOptionsFor("month"));
+    client.prefetchQuery(queryOptionsFor("year"));
+    client.prefetchQuery(queryOptionsFor("all"));
+  });
 
   return (
     <div
       className={
-        "max-w-[720px]  mx-auto overflow-hidden [box-shadow:_0px_7px_12px_0px_#0000004D] rounded-md bg-petrol-800 " +
+        "max-w-[720px]  mx-auto  [box-shadow:_0px_7px_12px_0px_#0000004D] rounded-md overflow-hidden bg-petrol-800 " +
         className
       }
     >
       <Header currentPrice={currentPrice} />
-      {error && <div>Error</div>}
+      {
+        error && <div>Error</div> // TODO: Error indicator and handling
+      }
       {data && (
-        <div
-          className={
-            (isPending &&
-              "animate-pulse  pointer-events-none transition-all") ||
-            ""
-          }
-        >
-          <Body
-            historicPrice={
-              isLoading ? [] : data.filter((_data, index) => index % 5 === 0)
-            }
-          />
-        </div>
+        <Body
+          historicPrice={data.filter((_data, index) => index % 5 === 0) || []}
+          timeframe={timeframe}
+        />
       )}
 
       <Footer selectedBtn={timeframe} onSelect={setTimeframe} />
