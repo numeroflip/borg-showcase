@@ -1,6 +1,7 @@
 import type { Metadata } from "next";
 import { Rubik } from "next/font/google";
 import "./globals.css";
+import Providers from "./providers";
 
 const rubik = Rubik({ weight: ["400", "600"], subsets: ["latin"] });
 
@@ -16,7 +17,9 @@ export default function RootLayout({
 }>) {
   return (
     <html lang="en">
-      <body className={rubik.className + " text-petrol-800"}>{children}</body>
+      <body className={rubik.className + " text-petrol-800"}>
+        <Providers>{children}</Providers>
+      </body>
     </html>
   );
 }

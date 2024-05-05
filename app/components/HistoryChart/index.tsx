@@ -8,7 +8,10 @@ import {
 import Footer from "./Footer";
 import Header from "./Header";
 import Body from "./Body";
-import { useState } from "react";
+import { getBorgHistoricPrice } from "@/app/lib/borgApi";
+import { useQuery } from "@tanstack/react-query";
+import { useEffect, useState } from "react";
+import { useIsClient } from "@/app/lib/hooks/useIsClient";
 
 interface Props {
   currentPrice: BorgPriceData;
@@ -19,6 +22,16 @@ interface Props {
 function HistoryChart({ currentPrice, historicPrice, className }: Props) {
   const [timeframe, setTimeframe] = useState<BorgPriceTimeframe>("day");
 
+  const { data, isPending, isFetched, error } = useQuery({
+    queryKey: ["borgHistoricPrice", timeframe],
+    queryFn: () => getBorgHistoricPrice(timeframe),
+    initialData: historicPrice,
+    staleTime: 10,
+  });
+
+  const isClient = useIsClient();
+  const isLoading = isClient && !isFetched;
+
   return (
     <div
       className={
@@ -27,9 +40,23 @@ function HistoryChart({ currentPrice, historicPrice, className }: Props) {
       }
     >
       <Header currentPrice={currentPrice} />
-      <Body
-        historicPrice={historicPrice.filter((_data, index) => index % 5 === 0)}
-      />
+      {error && <div>Error</div>}
+      {data && (
+        <div
+          className={
+            (isPending &&
+              "animate-pulse  pointer-events-none transition-all") ||
+            ""
+          }
+        >
+          <Body
+            historicPrice={
+              isLoading ? [] : data.filter((_data, index) => index % 5 === 0)
+            }
+          />
+        </div>
+      )}
+
       <Footer selectedBtn={timeframe} onSelect={setTimeframe} />
     </div>
   );
