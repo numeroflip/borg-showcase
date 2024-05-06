@@ -35,8 +35,8 @@ const Body: React.FC<Props> = ({ historicPrice, timeframe }) => {
 
   const isClient = useIsClient();
 
-  const firstTimestamp = historicPrice[0].timestamp;
-  const lastTimestamp = historicPrice[historicPrice.length - 1].timestamp;
+  const firstTimestamp = historicPrice[0]?.timestamp;
+  const lastTimestamp = historicPrice[historicPrice.length - 1]?.timestamp;
 
   const timeTicks = useMemo(() => {
     if (!firstTimestamp || !lastTimestamp) {
