@@ -58,12 +58,7 @@ function HistoryChart({
       {
         error && <div>Error</div> // TODO: Error indicator and handling
       }
-      {data && (
-        <Body
-          historicPrice={data.filter((_data, index) => index % 5 === 0) || []}
-          timeframe={timeframe}
-        />
-      )}
+      {data && <Body historicPrice={data || []} timeframe={timeframe} />}
 
       <Footer selectedBtn={timeframe} onSelect={setTimeframe} />
     </div>
