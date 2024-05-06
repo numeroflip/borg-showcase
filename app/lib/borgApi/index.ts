@@ -15,17 +15,23 @@ const historicPriceSchema = z.object({
 });
 
 export async function getBorgPrice(): Promise<BorgPriceResponse> {
-  return fetch(`${BASE_URL}/price`).then((res) => res.json());
+  return fetch(`${BASE_URL}/price`, { next: { revalidate: 30 } }).then((res) =>
+    res.json()
+  );
 }
 
 export async function getBorgStats(): Promise<BorgStatsResponse> {
-  return fetch(`${BASE_URL}/borg-stats`).then((res) => res.json());
+  return fetch(`${BASE_URL}/borg-stats`, {
+    next: { revalidate: 60 * 10 },
+  }).then((res) => res.json());
 }
 
 export async function getBorgHistoricPrice(
   interval: BorgPriceTimeframe = "day"
 ): Promise<BorgPriceAndTimeData[]> {
-  return fetch(`${BASE_URL}/historical-price/${interval}`)
+  return fetch(`${BASE_URL}/historical-price/${interval}`, {
+    next: { revalidate: 60 * 5 },
+  })
     .then((res) => res.json())
     .then((data) =>
       data.filter(
