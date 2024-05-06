@@ -1,5 +1,4 @@
 "use client";
-import { useWindowSize } from "@uidotdev/usehooks";
 import { Cell, Pie, PieChart, ResponsiveContainer, Tooltip } from "recharts";
 import CustomPieChartLabel from "./CustomLabel";
 import { getGradientID } from "./utils";
@@ -26,21 +25,18 @@ function DetailsPieChart({ stats }: Props) {
     },
   ];
 
-  const window = useWindowSize();
-  const isSm = window?.width || 600 > 768;
-
   const pieShapeOptions = {
-    cx: "38%",
+    cx: "45%",
     cy: "50%",
     strokeWidth: 0,
     isAnimationActive: false,
-    innerRadius: isSm ? "40%" : "55%",
-    outerRadius: isSm ? "60%" : "75%",
+    innerRadius: "55%",
+    outerRadius: "80%",
   };
 
   return (
     <ResponsiveContainer width="100%" height="100%">
-      <PieChart>
+      <PieChart margin={{ top: 0, right: 0, left: 0, bottom: 0 }}>
         {/* Placeholder chart, so a unified shadow can be applied to the "donut shape" */}
         <Pie
           {...pieShapeOptions}

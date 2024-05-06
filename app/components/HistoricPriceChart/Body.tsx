@@ -27,7 +27,10 @@ const GRADIENT_ID = "gradient-under-chart";
 const GOAL_DATA_DENSITY = 170;
 
 const Body: React.FC<Props> = ({ historicPrice, timeframe }) => {
-  const data = reduceDataDensity(historicPrice);
+  const data = reduceDataDensity(historicPrice).map((_data) => ({
+    ..._data,
+    timestamp: new Date(_data.timestamp).getTime(),
+  }));
   const minPrice = Math.min(...historicPrice.map((d) => d.price));
 
   const isClient = useIsClient();
@@ -61,7 +64,8 @@ const Body: React.FC<Props> = ({ historicPrice, timeframe }) => {
             axisLine={false}
             ticks={timeTicks}
             height={12}
-            interval={"equidistantPreserveStart"}
+            minTickGap={20}
+            interval={"preserveStart"}
             tickSize={0}
             tick={{
               fill: "white",

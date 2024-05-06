@@ -1,9 +1,18 @@
 import type { Metadata } from "next";
-import { Rubik } from "next/font/google";
 import "./globals.css";
 import Providers from "./providers";
 
-const rubik = Rubik({ weight: ["400", "600"], subsets: ["latin"] });
+import localFont from "next/font/local";
+
+// Font files can be colocated inside of `app`
+
+const ttCommons = localFont({
+  src: [
+    { path: "./fonts/TT Commons Regular.otf", weight: "400" },
+    { path: "./fonts/TT Commons DemiBold.otf", weight: "600" },
+  ],
+  display: "swap",
+});
 
 export const metadata: Metadata = {
   title: "BORG token metrics from SwissBorg. Previously CHSB, now BORG",
@@ -39,7 +48,7 @@ export default function RootLayout({
 }>) {
   return (
     <html lang="en">
-      <body className={rubik.className + " text-petrol-800"}>
+      <body className={ttCommons.className + " text-petrol-800"}>
         <Providers>{children}</Providers>
       </body>
     </html>

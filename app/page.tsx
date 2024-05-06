@@ -33,15 +33,16 @@ export default async function Home() {
           />
         </section>
 
-        <section className="px-5 w-full">
+        <section className="px-5 max-w-[1180px] w-full">
           <h2 className="text-3xl font-semibold md:text-5xl text-center mt-[24px] md:mt-[60px]">
             Breakdown of BORG’s circulating supply
           </h2>
-          <div className="flex items-center gap-12 w-full flex-col md:flex-row mt-10 md:mt-16">
-            <div className="flex-1 px-5">
-              <DetailList stats={stats} />
-            </div>
-            <div className="flex-1 w-full aspect-square">
+          <div className="flex items-center gap-12 lg:gap-0 w-full flex-col lg:flex-row mt-10 md:mt-0">
+            <DetailList
+              className="shrink-0 mx-5 w-full md:w-[550px]"
+              stats={stats}
+            />
+            <div className="w-full max-w-[400px] lg:max-w-full aspect-[10/8] justify-self-start lg:mt-10  xl:min-h-[550px] relative ">
               <DetailsPieChart stats={stats} />
             </div>
           </div>

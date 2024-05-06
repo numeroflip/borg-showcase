@@ -1,14 +1,16 @@
 import { BorgStatsResponse } from "@/app/lib/borgApi/types";
 import DetailItem from "./DetailItem";
 import { formatNumber, formatPercentage } from "@/app/lib/number";
+import { HTMLProps } from "react";
 
-interface Props {
+interface Props extends HTMLProps<HTMLUListElement> {
   stats: BorgStatsResponse;
+  classNme?: string;
 }
 
-function DetailList({ stats }: Props) {
+function DetailList({ stats, ...props }: Props) {
   return (
-    <>
+    <ul {...props}>
       <DetailItem
         iconSrc="/icons/info/token.svg"
         title="Remaining circulating supply"
@@ -50,7 +52,7 @@ function DetailList({ stats }: Props) {
         title="BORG in buyback pool"
         value={{ main: formatNumber(stats.borgInBubackPoolTokens) }}
       />
-    </>
+    </ul>
   );
 }
 

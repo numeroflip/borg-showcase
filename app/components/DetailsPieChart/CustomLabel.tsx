@@ -91,7 +91,7 @@ function CustomPieChartLabel(props: Props) {
         {...circleOptions}
       />
       <text
-        className="text-brand whitespace-pre-line fill-petrol-800 text-[10px] sm:text-[14px]"
+        className="text-brand whitespace-pre-line fill-petrol-800 text-[14px]"
         x={isOnRight ? x + offsetForCircle : x - offsetForCircle}
         y={y}
         textAnchor={isOnRight ? "start" : "end"}
