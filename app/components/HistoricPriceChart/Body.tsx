@@ -27,10 +27,8 @@ const GRADIENT_ID = "gradient-under-chart";
 const GOAL_DATA_DENSITY = 170;
 
 const Body: React.FC<Props> = ({ historicPrice, timeframe }) => {
-  const data = reduceDataDensity(historicPrice).map((_data) => ({
-    timestamp: new Date(_data.timestamp).getTime(),
-    price: _data.price,
-  }));
+  const data = reduceDataDensity(historicPrice);
+  const minPrice = Math.min(...historicPrice.map((d) => d.price));
 
   const isClient = useIsClient();
 
@@ -48,8 +46,6 @@ const Body: React.FC<Props> = ({ historicPrice, timeframe }) => {
     const hours = eachHourOfInterval({ start: startDate, end: endDate });
     return hours.map((d) => d.getTime());
   }, [firstTimestamp, lastTimestamp]);
-
-  const minPrice = Math.min(...historicPrice.map((d) => d.price));
 
   return (
     <div className="aspect-[72/17]">

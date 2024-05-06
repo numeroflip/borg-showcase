@@ -10,7 +10,7 @@ import Header from "./Header";
 import Body from "./Body";
 import { getBorgHistoricPrice } from "@/app/lib/borgApi";
 import { useQuery, useQueryClient } from "@tanstack/react-query";
-import { useEffect, useState } from "react";
+import { Suspense, useEffect, useState } from "react";
 
 interface Props {
   currentPrice: BorgPriceData;
@@ -58,7 +58,9 @@ function HistoricPriceChart({
       {
         error && <div>Error</div> // TODO: Error indicator and handling
       }
-      {data && <Body historicPrice={data || []} timeframe={timeframe} />}
+      <Suspense>
+        {data && <Body historicPrice={data || []} timeframe={timeframe} />}
+      </Suspense>
 
       <Footer selectedBtn={timeframe} onSelect={setTimeframe} />
     </div>
