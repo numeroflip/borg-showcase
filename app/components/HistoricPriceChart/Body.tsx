@@ -24,7 +24,7 @@ interface Props {
 }
 
 const GRADIENT_ID = "gradient-under-chart";
-const GOAL_DATA_DENSITY = 170;
+const TARGET_DATA_DENSITY = 170;
 
 const Body: React.FC<Props> = ({ historicPrice, timeframe }) => {
   const data = reduceDataDensity(historicPrice).map((_data) => ({
@@ -64,7 +64,7 @@ const Body: React.FC<Props> = ({ historicPrice, timeframe }) => {
             axisLine={false}
             ticks={timeTicks}
             height={12}
-            minTickGap={20}
+            minTickGap={40}
             interval={"preserveStart"}
             tickSize={0}
             tick={{
@@ -175,8 +175,8 @@ function formatTimeValue(date: Date, timeframe: BorgPriceTimeframe) {
 
 function reduceDataDensity(data: BorgPriceAndTimeData[]) {
   return data.filter((_data, index) => {
-    if (data.length > GOAL_DATA_DENSITY) {
-      return index % Math.floor(data.length / GOAL_DATA_DENSITY) === 0;
+    if (data.length > TARGET_DATA_DENSITY) {
+      return index % Math.floor(data.length / TARGET_DATA_DENSITY) === 0;
     }
   });
 }
