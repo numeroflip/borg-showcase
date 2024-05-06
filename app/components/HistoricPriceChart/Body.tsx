@@ -100,7 +100,6 @@ const Body: React.FC<Props> = ({ historicPrice, timeframe }) => {
             tick={{
               fill: "white",
               fontSize: 11,
-
               transform: "translate(-8 0)",
               fontWeight: 600,
               strokeWidth: 2,

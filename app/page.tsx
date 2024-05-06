@@ -1,21 +1,20 @@
-import { Suspense } from "react";
-import DetailItem from "./components/DetailItem";
-import HistoryChart from "./components/HistoryChart";
+import HistoricPriceChart from "./components/HistoricPriceChart";
 import {
   getBorgHistoricPrice,
   getBorgPrice,
   getBorgStats,
 } from "./lib/borgApi";
 
-import { formatNumber, formatPercentage } from "./lib/number";
 import DetailsPieChart from "./components/DetailsPieChart";
+import DetailList from "./components/DetailList";
 
 export default async function Home() {
-  const [price, stats, historicPrice] = await Promise.all([
+  const [currentPrice, stats, historicPrice] = await Promise.all([
     getBorgPrice(),
     getBorgStats(),
     getBorgHistoricPrice(),
   ]);
+
   return (
     <main className="flex min-h-screen flex-col items-center justify-between">
       <section className="px-5   w-full max-w text-center text-white bg-gradient-to-l from-petrol-700 to-petrol-800 py-9 md:py-16">
@@ -26,70 +25,22 @@ export default async function Home() {
           Deep-dive into the statistics of BORG and the mechanics of the full
           SwissBorg Ecosystem.
         </h2>
-        <Suspense fallback={null}>
-          <HistoryChart
-            className="mt-4 md:mt-12"
-            currentPrice={price.usd}
-            initialHistoricPrice={historicPrice}
-          />
-        </Suspense>
+        <HistoricPriceChart
+          className="mt-4 md:mt-12"
+          currentPrice={currentPrice.usd}
+          initialHistoricPrice={historicPrice}
+        />
       </section>
 
-      <section className="px-5">
+      <section className="px-5 w-full">
         <h2 className="text-3xl font-semibold md:text-5xl text-center mt-[24px] md:mt-[60px]">
           Breakdown of BORG’s circulating supply
         </h2>
         <div className="flex items-center gap-12 w-full flex-col md:flex-row mt-10 md:mt-16">
           <div className="flex-1 px-5">
-            <DetailItem
-              iconSrc="/icons/info/token.svg"
-              title="Remaining circulating supply"
-              value={{ main: formatNumber(stats.circulatingSupplyTokens) }}
-            />
-            <DetailItem
-              iconSrc="/icons/info/diamond.svg"
-              title="BORG staked"
-              value={{
-                main: formatNumber(stats.stakedBorgTokens),
-                secondary: (
-                  <>
-                    (
-                    <strong>
-                      {formatPercentage(stats.stakedBorgPercentage)}
-                    </strong>
-                    % of Circulating supply)
-                  </>
-                ),
-              }}
-            />
-            <DetailItem
-              iconSrc="/icons/info/diamond.svg"
-              title="BORG in Yield"
-              value={{
-                main: formatNumber(stats.borgInYieldTokens),
-                secondary: (
-                  <>
-                    (
-                    <strong>
-                      {formatPercentage(stats.borgInYieldPercentage)}
-                    </strong>
-                    % of Circulating supply)
-                  </>
-                ),
-              }}
-            />
-            <DetailItem
-              iconSrc="/icons/info/fire.svg"
-              title="Circulating supply burned"
-              value={{ main: formatNumber(stats.borgBurnedTokens) }}
-            />
-            <DetailItem
-              iconSrc="/icons/info/circulate.svg"
-              title="BORG in buyback pool"
-              value={{ main: formatNumber(stats.borgInBubackPoolTokens) }}
-            />
+            <DetailList stats={stats} />
           </div>
-          <div>
+          <div className="flex-1 w-full aspect-square">
             <DetailsPieChart stats={stats} />
           </div>
         </div>

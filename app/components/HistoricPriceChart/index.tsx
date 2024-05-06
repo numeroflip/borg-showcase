@@ -25,7 +25,7 @@ function queryOptionsFor(timeframe: BorgPriceTimeframe) {
   };
 }
 
-function HistoryChart({
+function HistoricPriceChart({
   currentPrice,
   initialHistoricPrice,
   className,
@@ -65,4 +65,4 @@ function HistoryChart({
   );
 }
 
-export default HistoryChart;
+export default HistoricPriceChart;
