@@ -2,7 +2,10 @@
 
 A NextJs site, which showcases BORG token Metrics.
 
-Here is the live deployment: https://borg-showcase.vercel.app/
+![image](https://github.com/numeroflip/borg-showcase/assets/46031874/f811950b-a39b-4587-99e3-137d2bc3d614)
+
+
+Live deployment: https://borg-showcase.vercel.app/
 
 API Used: `https://borg-api-techchallenge.swissborg-stage.com/api`
 
